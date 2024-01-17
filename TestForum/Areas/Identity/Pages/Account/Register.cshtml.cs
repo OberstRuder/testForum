@@ -107,6 +107,11 @@ namespace TestForum.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "LastName")]
             public string LastName { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Role")]
+            public string Role { get; set; }
         }
 
 
