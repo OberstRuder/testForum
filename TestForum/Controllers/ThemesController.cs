@@ -181,6 +181,9 @@ namespace TestForum.Controllers
                 _context.Themes.Remove(theme);
             }
 
+            var postsToRemove = await _context.Posts.Where(p => p.ThemeId == id).ToListAsync();
+            _context.Posts.RemoveRange(postsToRemove);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
