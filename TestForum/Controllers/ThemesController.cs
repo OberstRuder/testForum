@@ -100,9 +100,12 @@ namespace TestForum.Controllers
             }
 
             var theme = await _context.Themes.FindAsync(id);
-            if (theme.IdentityUserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (!User.IsInRole("Admin"))
             {
-                return NotFound();
+                if (theme.IdentityUserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    return NotFound();
+                }
             }
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", theme.IdentityUserId);
             return View(theme);
@@ -157,11 +160,12 @@ namespace TestForum.Controllers
             var theme = await _context.Themes
                 .Include(t => t.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (theme.IdentityUserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
-            {
-                return NotFound();
+            if (!User.IsInRole("Admin")) {
+                if (theme.IdentityUserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    return NotFound();
+                }
             }
-
             return View(theme);
         }
 
