@@ -1,5 +1,5 @@
 ﻿@using System.Security.Claims
-@model IEnumerable<TestForum.Models.Theme>
+@model PaginatedList<TestForum.Models.Theme>
 
 @{
     ViewData["Title"] = "Index";
@@ -23,3 +23,16 @@
         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
     }
 }
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<div class="d-flex justify-content-center align-items-end mb-4">
+    <a asp-action="index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-default @prevDisabled"><<</a>
+    <div class="btn" style="cursor: default">
+        Page @Model.PageIndex of @(Model.TotalPages == 0 ? 1 : Model.TotalPages)
+    </div>
+    <a asp-action="index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-default @nextDisabled">>></a>
+</div>

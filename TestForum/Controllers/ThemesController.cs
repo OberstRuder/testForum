@@ -22,10 +22,12 @@ namespace TestForum.Controllers
         }
 
         // GET: Themes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
             var applicationDbContext = _context.Themes.Include(t => t.User).Include(p => p.Posts);
-            return View(await applicationDbContext.ToListAsync());
+            int pageSize = 10;
+
+            return View(await PaginatedList<Theme>.CreateAsync(applicationDbContext.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Themes/Details/5
