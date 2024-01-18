@@ -5,23 +5,42 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Forum</h1>
-
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New theme</a>
 </p>
+
+
 @foreach (var item in Model) {
-    <h4>@item.Title</h4>
-    <p>@item.Description | Total posts: @item.Posts.Count | Created by: @item.User.Email</p>    
-    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-    @if (User.IsInRole("Admin") || (User.Identity.IsAuthenticated && item.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)))
-    {
-        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-    }
-    @if (User.IsInRole("Admin"))
-    {
-        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-    }
+    <div class="container bd-purple-200 p-4 myrounded m-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h4>@item.Title</h4>
+            <p>Created by: @item.User.UserName</p> 
+        </div>
+        <hr />
+        <div class="container">
+            <p>@item.Description</p>
+        </div>
+        <hr />
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="container">
+                <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">Details</a>
+                @if (User.IsInRole("Admin") || (User.Identity.IsAuthenticated && item.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                {
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id">Delete</a>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">Edit</a>
+                }
+            </div>
+            <div class="container custom-container">
+                <p class="custom-text">
+                Total posts: @item.Posts.Count
+            </p>
+            </div>
+    </div>
+    </div>
+
 }
 
 @{

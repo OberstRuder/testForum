@@ -18,5 +18,33 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #e2d9f3;
+}
+
+.bd-purple-300 {
+    color: #000;
+    background-color: #a98eda;
+}
+
+.bd-purple-200 {
+    color: #000;
+    background-color: #c5b3e6;
+}
+
+.bd-purple-100 {
+    color: #000;
+    background-color: #e2d9f3;
+}
+
+.myrounded {
+    border-radius: 20px;
+}
+
+.custom-container {
+    text-align: right;
+}
+
+.custom-text {
+    margin-right: 0;
 }
