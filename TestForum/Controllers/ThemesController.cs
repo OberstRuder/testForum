@@ -190,6 +190,33 @@ namespace TestForum.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
+        public async Task<IActionResult> DeletePost(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var post = await _context.Posts
+                .Include(p => p.Theme)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+           
+            if (User.IsInRole("Admin") || post.IdentityUserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                _context.Posts.Remove(post);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Details", new { id = post.ThemeId });
+            }
+
+            return Forbid();
+        }
         private bool ThemeExists(int id)
         {
             return _context.Themes.Any(e => e.Id == id);

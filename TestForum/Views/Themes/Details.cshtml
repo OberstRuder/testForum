@@ -13,9 +13,16 @@
 <p>- @Model.User.UserName</p>
 
 <h3>Posts</h3>
-@foreach(var posts in Model.Posts)
+@foreach(var post in Model.Posts)
 {
-    <p>@posts.Content - @posts.User.Email</p>
+    <p>
+        @post.Content - @post.User.Email
+
+        @if (UserManager.GetUserId(User) == post.IdentityUserId || User.IsInRole("Admin"))
+        {
+            <a asp-action="DeletePost" asp-route-id="@post.Id">Delete</a>
+        }
+    </p>
     <hr />
 }
 
