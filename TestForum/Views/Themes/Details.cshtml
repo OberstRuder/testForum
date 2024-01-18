@@ -10,7 +10,7 @@
 
 <div class="container d-flex justify-content-between align-items-center">
     <h2>@Model.Title</h2>
-    <p>Created by: @Model.User.UserName</p>
+    <p>Created by: @Model.User.UserName@(await UserManager.IsInRoleAsync(Model.User, "Admin") ? " (Admin)" : "")</p>
 </div>
 <div class="container">
     <p>@Model.Description</p>
@@ -24,7 +24,7 @@
     <div class="container bd-purple-200 p-4 myrounded m-3">
         <div class="row">
             <div class="col-3 align-self-start">
-                <p><b>@post.User.UserName :</b></p>
+                <p><b>@post.User.UserName@(await UserManager.IsInRoleAsync(post.User, "Admin") ? " (Admin)" : ""):</b></p>
             </div>
             <div class="col-9 d-flex justify-content-between align-items-end">
                 <p>@post.Content</p>
@@ -39,6 +39,7 @@
     </div>
 }
 <div class="container m-3">
+    <h2>Add post:</h2>
 <form asp-action="AddPost">
     <div class="form-group">
         <textarea name="content" class="form-control"></textarea>
